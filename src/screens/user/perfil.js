@@ -56,21 +56,37 @@ export default function PerfilScreen() {
   }, []);
 
   const handleSave = async () => {
-    try {
-      await api.put(`/usuarios/${user.dni}`, {
-        email,
-        telefono,
-        direccion,
-      });
-      Alert.alert("✅ Éxito", "Datos actualizados correctamente");
-    } catch (err) {
-      console.error(
-        "❌ Error actualizando perfil:",
-        err.response?.data || err.message
-      );
-      Alert.alert("Error", "No se pudieron guardar los cambios");
-    }
-  };
+  try {
+    await api.put(`/usuarios/${user.dni}`, {
+      // campos obligatorios del backend
+      dni: user.dni,
+      nombre: user.nombre,
+      apellido: user.apellido,
+      es_admin: user.es_admin,
+
+      // campos editables
+      email: email || user.email,
+      telefono: telefono || user.telefono,
+      direccion: direccion || user.direccion,
+    });
+
+    Alert.alert("✅ Éxito", "Datos actualizados correctamente");
+
+    // refrescar datos locales
+    setUser({
+      ...user,
+      email,
+      telefono,
+      direccion,
+    });
+  } catch (err) {
+    console.error(
+      "❌ Error actualizando perfil:",
+      err.response?.data || err.message
+    );
+    Alert.alert("Error", "No se pudieron guardar los cambios");
+  }
+};
 
   if (loading) return <Loader/>;
 
@@ -171,7 +187,7 @@ export default function PerfilScreen() {
 
           <Text style={[styles.info, { color: theme.text }]}>Fondo:</Text>
           <View style={styles.paletteRow}>
-            {["#FFFFFF", "#121212", "#0000ffff"].map((color) => (
+            {["#00d0ffff", "#00ff5eff", "#ff00d9ff"].map((color) => (
               <TouchableOpacity
                 key={color}
                 style={[styles.colorBox, { backgroundColor: color }]}
@@ -182,7 +198,7 @@ export default function PerfilScreen() {
 
           <Text style={[styles.info, { color: theme.text }]}>Primario:</Text>
           <View style={styles.paletteRow}>
-            {["#000000ff", "#ffffffff", "#FF9500"].map((color) => (
+            {["#00d0ffff", "#00ff5eff", "#ff00d9ff"].map((color) => (
               <TouchableOpacity
                 key={color}
                 style={[styles.colorBox, { backgroundColor: color }]}
@@ -204,7 +220,7 @@ export default function PerfilScreen() {
 
           <Text style={[styles.info, { color: theme.text }]}>Tarjeta:</Text>
           <View style={styles.paletteRow}>
-            {["#ff0000ff", "#1E1E1E", "#ffffffff"].map((color) => (
+            {["#00d0ffff", "#00ff5eff", "#ff00d9ff"].map((color) => (
               <TouchableOpacity
                 key={color}
                 style={[styles.colorBox, { backgroundColor: color }]}

@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // ⚙ URL del backend (usa la IP real de tu PC en la misma red que el celular)
 const API_URL = "https://proyecto-sefy-backend.onrender.com";  
 
+
 const api = axios.create({
   baseURL: API_URL,
   timeout: 10000,

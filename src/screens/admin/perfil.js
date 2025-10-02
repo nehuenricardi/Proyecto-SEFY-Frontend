@@ -56,21 +56,37 @@ export default function PerfilScreen() {
   }, []);
 
   const handleSave = async () => {
-    try {
-      await api.put(`/usuarios/${user.dni}`, {
-        email,
-        telefono,
-        direccion,
-      });
-      Alert.alert("✅ Éxito", "Datos actualizados correctamente");
-    } catch (err) {
-      console.error(
-        "❌ Error actualizando perfil:",
-        err.response?.data || err.message
-      );
-      Alert.alert("Error", "No se pudieron guardar los cambios");
-    }
-  };
+  try {
+    await api.put(`/usuarios/${user.dni}`, {
+      // campos obligatorios del backend
+      dni: user.dni,
+      nombre: user.nombre,
+      apellido: user.apellido,
+      es_admin: user.es_admin,
+
+      // campos editables
+      email: email || user.email,
+      telefono: telefono || user.telefono,
+      direccion: direccion || user.direccion,
+    });
+
+    Alert.alert("✅ Éxito", "Datos actualizados correctamente");
+
+    // refrescar datos locales
+    setUser({
+      ...user,
+      email,
+      telefono,
+      direccion,
+    });
+  } catch (err) {
+    console.error(
+      "❌ Error actualizando perfil:",
+      err.response?.data || err.message
+    );
+    Alert.alert("Error", "No se pudieron guardar los cambios");
+  }
+};
 
   if (loading) return <Loader/>;
 
