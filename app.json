@@ -13,7 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nehuenricardi.sefy",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -31,6 +35,12 @@
         "projectId": "63e60393-b16b-447a-8c85-ed656d5dd08b"
       }
     },
-    "owner": "nehuenricardi"
+    "owner": "nehuenricardi",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/63e60393-b16b-447a-8c85-ed656d5dd08b"
+    }
   }
 }
